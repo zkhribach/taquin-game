@@ -2,21 +2,19 @@
 *.o
 *.obj
 
-# Executable files
-*.exe
-*.out
-*.app
-*.elf
+# Compiled shared libraries
+*.so
+*.so.*
 
-# Debug files
-*.dSYM/
-*.stackdump
+# Static libraries
+*.a
+*.la
+*.lo
 
-# Logs and temp files
-*.log
-*.tmp
-*.bak
-*.swp
+# Executable files (without extension)
+*.[eE][xX][eE]
+*.[oO]
+a.out
 
 # Dependency files
 *.d
@@ -28,6 +26,12 @@ CMakeCache.txt
 Makefile
 cmake_install.cmake
 
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+
 # IDE and Editor files
 .vscode/
 .idea/
@@ -37,23 +41,10 @@ cmake_install.cmake
 # macOS specific
 .DS_Store
 
-# Linux specific
-*.so
-*.a
-*.la
-*.lo
-*.spec
-
 # Windows specific
 Thumbs.db
 desktop.ini
 
-# Ignore any tags file (e.g., ctags)
-tags
-
-# Generated documentation
-/docs/
-*.html
-
 # Backup files
 *~
+
