@@ -1,0 +1,59 @@
+# Compiled object files
+*.o
+*.obj
+
+# Executable files
+*.exe
+*.out
+*.app
+*.elf
+
+# Debug files
+*.dSYM/
+*.stackdump
+
+# Logs and temp files
+*.log
+*.tmp
+*.bak
+*.swp
+
+# Dependency files
+*.d
+
+# CMake build folders
+/build/
+CMakeFiles/
+CMakeCache.txt
+Makefile
+cmake_install.cmake
+
+# IDE and Editor files
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# macOS specific
+.DS_Store
+
+# Linux specific
+*.so
+*.a
+*.la
+*.lo
+*.spec
+
+# Windows specific
+Thumbs.db
+desktop.ini
+
+# Ignore any tags file (e.g., ctags)
+tags
+
+# Generated documentation
+/docs/
+*.html
+
+# Backup files
+*~
