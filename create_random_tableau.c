@@ -52,6 +52,7 @@ char* tableau_rand(char* chaine, int n){
     for (int i = 0; i< taille; i++){
         used[i] = 0;
     }
+    used[0] = 1;
     for (int i = 0; i< taille - 1; i++){
         do {
             a = random_(taille);
