@@ -1,50 +1,68 @@
-# Compiled object files
+# Ignore all files
+*
+
+# Unignore all files with extensions (keep files with extensions)
+!*.*
+
+# Unignore all directories
+!*/
+
+# Ignore files with extension `.class` and `.sm`
+*.class
+*.sm
+
+# Ignore `bin` directory
+bin/
+# or
+*/bin/*
+
+# Unignore all `.jar` files in `bin` directory
+!*/bin/*.jar
+
+# Ignore `library.jar` in `bin` directory
+*/bin/library.jar
+
+# Ignore specific file with extension
+relative/path/to/dir/filename.extension
+
+# Ignore specific file without extension
+relative/path/to/dir/anotherfile
+
+# Common compiled files and build artifacts
 *.o
-*.obj
-
-# Compiled shared libraries
-*.so
-*.so.*
-
-# Static libraries
 *.a
-*.la
-*.lo
-
-# Executable files (without extension)
-*.[eE][xX][eE]
-*.[oO]
-a.out
-
-# Dependency files
-*.d
-
-# CMake build folders
-/build/
-CMakeFiles/
-CMakeCache.txt
-Makefile
-cmake_install.cmake
-
-# Logs and temp files
+*.so
+*.exe
+*.dll
+*.out
+*.obj
 *.log
+
+# Ignore node_modules (for JavaScript projects)
+node_modules/
+
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Ignore IDE or editor specific files
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Ignore OS specific files
+.DS_Store
+Thumbs.db
+
+# Ignore build directories
+build/
+dist/
+
+# Ignore temporary files
 *.tmp
 *.bak
 *.swp
-
-# IDE and Editor files
-.vscode/
-.idea/
-*.sublime-project
-*.sublime-workspace
-
-# macOS specific
-.DS_Store
-
-# Windows specific
-Thumbs.db
-desktop.ini
-
-# Backup files
-*~
 
