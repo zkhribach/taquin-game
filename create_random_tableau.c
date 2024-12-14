@@ -10,7 +10,7 @@ char* tableau_rand(char* chaine, int n);
 
 int main(){
     int n;
-    printf("Chose the difficulty : 1 for 3x3 ,2 for 4x4 ,3 for 5x5 : \n");
+    printf("Chose the difficulty : 3 for 3x3 ,4 for 4x4 ,5 for 5x5 : \n");
     scanf("%d", &n);
     switch (n) {
         case 3 : printf("3x3 chosen \n") ;
