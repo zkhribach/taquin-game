@@ -1,14 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-
+#include <string.h>
 
 int random_(int n);
-char* tableau_vide(int n);
-char* tableau_rand(char* chaine, int n);
-
+void tableau_vide(int chaine[100][100], int n);
+void tableau_rand(int chaine[100][100], int n);
 
 int main(){
+    srand( time( 0 ) );
     int n;
     printf("Chose the difficulty : 3 for 3x3 ,4 for 4x4 ,5 for 5x5 : \n");
     scanf("%d", &n);
@@ -22,47 +22,59 @@ int main(){
         default : printf("Invalid choice\n");
         return 1; //add loop here later
     }
-    char* g = tableau_vide(n);
-    char* grid = tableau_rand(g,n);
+    int g[100][100];
+    tableau_vide(g,n);
+    tableau_rand(g,n);
     printf("Generated grid:\n");
-    for (int i = 0; i < n * n; i++) {
-        printf("(%d) ", grid[i]);
-        if ((i + 1) % n == 0) {
-            printf("\n");
+    for (int i = 0; i < n ; i++) {
+        for (int j = 0; j < n ; j++){
+            printf("(%d) ", g[i][j]);
         }
+        printf("\n");
     }
     return 0;
 }
-
 int random_(int n) {
-    return (rand() % n - 1) + 1;
-}
-char* tableau_vide(int n){
-    static char chaine[100];
-    for (int i = 0; i<n * n; i++){
-        chaine[i] = 0;
-    }
-    return chaine; // creer une chaine vide
+    int searchedValue = (rand() % n - 1) + 1;
+    return searchedValue;
 }
 
-char* tableau_rand(char* chaine, int n){
+void tableau_vide(int chaine[100][100], int n){
+    for (int i = 0; i < n; i++){
+        for (int j = 0; j < n; j++) {
+            chaine[i][j] = 0;
+        }
+    }
+}
+
+void tableau_rand(int chaine[100][100], int n){
     int taille = n * n;
     int a;
     int used[taille];
     for (int i = 0; i< taille; i++){
         used[i] = 0;
     }
-    used[0] = 1;
-    for (int i = 0; i< taille - 1; i++){
-        do {
-            a = random_(taille);
-        } while (used[a] == 1);
-
-        chaine[i] = a;
-        used[a] = 1;
+    used[0]= 1;
+    for (int i = 0; i< n  ; i++){
+        for (int j = 0; j < n ; j++){
+            if (i == n - 1 && j == n - 1){
+                continue;
+            }
+            do {
+                a = random_(taille);
+            } while (used[a] == 1);
+            chaine[i][j] = a;
+            used[a] = 1;
+        }
     }
-    return chaine;
 }
+
+
+
+
+
+
+
 
 
 
