@@ -6,6 +6,12 @@
 int random_(int n);
 void tableau_vide(int chaine[100][100], int n);
 void tableau_rand(int chaine[100][100], int n);
+void swap(int g[][100] , int x , int y, int n);
+
+typedef struct {
+    int i;
+    int j;
+} Index;
 
 int main(){
     srand( time( 0 ) );
@@ -31,6 +37,30 @@ int main(){
             printf("(%d) ", g[i][j]);
         }
         printf("\n");
+    }
+    int y[100][100];
+    int c = 1;
+    for (int i = 0 ; i < n ; i++)
+    {
+        for (int j = 0 ; j < n ; j++)
+        {
+            y[i][j] = c;
+            c++;
+        }
+    }
+    y[n-1][n-1]=0;
+    int x;
+    while (g != y)
+    {
+        printf("Ecrit ce que tu veut swapper :");
+        scanf("%d", &x);
+        swap(g,0,x,n);
+        for (int i = 0; i < n ; i++) {
+            for (int j = 0; j < n ; j++){
+                printf("(%d) ", g[i][j]);
+            }
+            printf("\n");
+        }
     }
     return 0;
 }
@@ -70,6 +100,38 @@ void tableau_rand(int chaine[100][100], int n){
 }
 
 
+
+Index detect_index(int x, int t[][100], int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (t[i][j] == x) {
+                Index index = {i, j};
+                return index;
+            }
+        }
+    }
+    Index invalid = {-1, -1}; // Return an invalid index if not found
+    return invalid;
+}
+
+void permutation(int *x , int *y)
+{
+    int tmp = *x;
+    *x = *y;
+    *y = tmp;
+}
+
+void swap(int g[][100] , int x , int y, int n){
+    Index a = detect_index(x, g, n);
+    Index b = detect_index(y, g, n);
+    if ( ( ( b.i == a.i - 1 && b.j == a.j ) || (b.i == a.i + 1 && b.j == a.j) ) || ( ( b.i == a.i  && b.j == a.j - 1 ) || (b.i == a.i && b.j == a.j + 1 ) ) )
+    {
+        permutation(&g[a.i][a.j], &g[b.i][b.j]);
+    }
+    else{
+        printf("permutation non permise\n");
+    }
+}
 
 
 
