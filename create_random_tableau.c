@@ -4,9 +4,9 @@
 #include <string.h>
 
 int random_(int n);
-void tableau_vide(int chaine[100][100], int n);
-void tableau_rand(int chaine[100][100], int n);
-void swap(int g[][100] , int x , int y, int n);
+void tableau_vide(int chaine[5][5], int n);
+void tableau_rand(int chaine[5][5], int n);
+void swap(int g[][5] , int x , int y, int n);
 
 typedef struct {
     int i;
@@ -18,17 +18,9 @@ int main(){
     int n;
     printf("Chose the difficulty : 3 for 3x3 ,4 for 4x4 ,5 for 5x5 : \n");
     scanf("%d", &n);
-    switch (n) {
-        case 3 : printf("3x3 chosen \n") ;
-        break ;
-        case 4 : printf("4x4 chosen \n") ;
-        break ;
-        case 5 : printf("5x5 chosen \n") ;
-        break ;
-        default : printf("Invalid choice\n");
-        return 1; //add loop here later
-    }
-    int g[100][100];
+    printf("%dx%d chosen \n",n,n);
+
+    int g[5][5];
     tableau_vide(g,n);
     tableau_rand(g,n);
     printf("Generated grid:\n");
@@ -38,19 +30,19 @@ int main(){
         }
         printf("\n");
     }
-    int y[100][100];
+    int tableauciblé[5][5];
     int c = 1;
     for (int i = 0 ; i < n ; i++)
     {
         for (int j = 0 ; j < n ; j++)
         {
-            y[i][j] = c;
+            tableauciblé[i][j] = c;
             c++;
         }
     }
-    y[n-1][n-1]=0;
+    tableauciblé[n-1][n-1]=0;
     int x;
-    while (g != y)
+    while (g != tableauciblé[i][j])
     {
         printf("Ecrit ce que tu veut swapper :");
         scanf("%d", &x);
@@ -65,11 +57,11 @@ int main(){
     return 0;
 }
 int random_(int n) {
-    int searchedValue = (rand() % n - 1) + 1;
+    int searchedValue = rand() % n;
     return searchedValue;
 }
 
-void tableau_vide(int chaine[100][100], int n){
+void tableau_vide(int chaine[5][5], int n){
     for (int i = 0; i < n; i++){
         for (int j = 0; j < n; j++) {
             chaine[i][j] = 0;
@@ -77,7 +69,7 @@ void tableau_vide(int chaine[100][100], int n){
     }
 }
 
-void tableau_rand(int chaine[100][100], int n){
+void tableau_rand(int chaine[5][5], int n){
     int taille = n * n;
     int a;
     int used[taille];
@@ -101,7 +93,7 @@ void tableau_rand(int chaine[100][100], int n){
 
 
 
-Index detect_index(int x, int t[][100], int n) {
+Index detect_index(int x, int t[][5], int n) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
             if (t[i][j] == x) {
@@ -121,7 +113,7 @@ void permutation(int *x , int *y)
     *y = tmp;
 }
 
-void swap(int g[][100] , int x , int y, int n){
+void swap(int g[][5] , int x , int y, int n){
     Index a = detect_index(x, g, n);
     Index b = detect_index(y, g, n);
     if ( ( ( b.i == a.i - 1 && b.j == a.j ) || (b.i == a.i + 1 && b.j == a.j) ) || ( ( b.i == a.i  && b.j == a.j - 1 ) || (b.i == a.i && b.j == a.j + 1 ) ) )
