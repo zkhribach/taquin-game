@@ -13,13 +13,13 @@
 #define FONT_PATH "/usr/share/fonts/TTF/Hack-Regular.ttf"
 #endif
 
-// Struct to represent the row/column index
+
 typedef struct {
     int i;
     int j;
 } Index;
 
-// Function prototypes
+
 int random_(int n);
 void tableau_vide(int chaine[100][100], int n);
 void tableau_rand(int chaine[100][100], int n);
@@ -44,7 +44,7 @@ TTF_Font* font = NULL;
 Uint32 start_time;
 Uint32 elapsed_time = 0;
 int game_won = 0;
-int selected_option = 0; // Declare selected_option as a global variable
+int selected_option = 0;
 
 enum GameState {
     MENU,
