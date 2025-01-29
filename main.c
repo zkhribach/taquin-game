@@ -2,23 +2,21 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <SDL2/SDL.h>
-#include <SDL2/SDL_ttf.h>
+#include <SDL.h>
+#include <SDL_ttf.h>
 
-#define WINDOW_WIDTH 400
-#define WINDOW_HEIGHT 800
+#define WINDOW_WIDTH 600
+#define WINDOW_HEIGHT 600
 #ifdef _WIN32
 #define FONT_PATH "C:\\Windows\\Fonts\\arial.ttf"
 #else
 #define FONT_PATH "/usr/share/fonts/TTF/Hack-Regular.ttf"
 #endif
 
-
 typedef struct {
     int i;
     int j;
 } Index;
-
 
 int random_(int n);
 void tableau_vide(int chaine[100][100], int n);
@@ -41,6 +39,7 @@ void process_menu_input(SDL_Event *event, int *selected_option, int *menu_state)
 SDL_Window* window = NULL;
 SDL_Renderer* renderer = NULL;
 TTF_Font* font = NULL;
+SDL_Texture* background_texture = NULL;
 Uint32 start_time;
 Uint32 elapsed_time = 0;
 int game_won = 0;
@@ -51,7 +50,7 @@ enum GameState {
     GAME
 };
 
-int main() {
+int main(int argc, char *argv[]) {
     srand(time(0));
 
     if (initialize_window() != 0) {
@@ -62,7 +61,6 @@ int main() {
     int g[100][100];
     int y[100][100];
 
-    // Start in the MENU state
     int game_state = MENU;
 
     SDL_Event event;
@@ -82,7 +80,7 @@ int main() {
             break;
         }
 
-        SDL_Delay(1000 / 60); // frame cap
+        SDL_Delay(1000 / 60);
     }
 
     destroy_window();
@@ -104,14 +102,13 @@ void game_loop(int n, int g[100][100], SDL_Renderer *renderer, TTF_Font *font) {
 
         render_update(g, n, start_time, &elapsed_time, renderer, font, game_won);
 
-        SDL_Delay(1000 / 60); // frame cap
+        SDL_Delay(1000 / 60);
     }
 }
 
 void handle_event(SDL_Event *event, int g[100][100], int n, int *game_won) {
     process_input(event, g, n);
 
-    // check if won
     if (check_win(g, n)) {
         *game_won = 1;
     }
@@ -173,6 +170,8 @@ void setup(int n, int g[100][100], int y[100][100]) {
 void render_update(int g[100][100], int n, Uint32 start_time, Uint32 *elapsed_time, SDL_Renderer *renderer, TTF_Font *font, int game_won) {
     SDL_RenderClear(renderer);
 
+    SDL_RenderCopy(renderer, background_texture, NULL, NULL);
+
     render_grid(g, n, renderer, font);
 
     char time_text[32];
@@ -181,7 +180,7 @@ void render_update(int g[100][100], int n, Uint32 start_time, Uint32 *elapsed_ti
     SDL_Color white = {255, 255, 255, 255};
     SDL_Surface* surface = TTF_RenderText_Solid(font, time_text, white);
     SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-    SDL_Rect dst = {WINDOW_WIDTH - surface->w - 10, 20, surface->w, surface->h}; // Top-right position
+    SDL_Rect dst = {WINDOW_WIDTH - surface->w - 10, 20, surface->w, surface->h};
     SDL_RenderCopy(renderer, texture, NULL, &dst);
     SDL_FreeSurface(surface);
     SDL_DestroyTexture(texture);
@@ -192,24 +191,26 @@ void render_update(int g[100][100], int n, Uint32 start_time, Uint32 *elapsed_ti
 void render_grid(int g[100][100], int n, SDL_Renderer *renderer, TTF_Font *font) {
     int tile_width = WINDOW_WIDTH / n;
     int tile_height = WINDOW_HEIGHT / n;
+    int margin = 10; // Margin around the number
+    SDL_Color tile_color = {100, 100, 0, 255}; // Color for the border and number background
+
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
-            SDL_Rect tile = {j * tile_width, i * tile_height, tile_width, tile_height};
             if (g[i][j] != 0) {
-                SDL_SetRenderDrawColor(renderer, 255, 0, 0, 255); // Red
-                SDL_RenderFillRect(renderer, &tile);
-            } else {
-                SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255); // black for empty tile
-                SDL_RenderFillRect(renderer, &tile);
-            }
+                SDL_Rect tile = {j * tile_width, i * tile_height, tile_width, tile_height};
 
-            char number_text[2];
-            if (g[i][j] != 0) {
+                // Draw the border around the number
+                SDL_Rect inner_tile = {tile.x + margin, tile.y + margin, tile_width - 2 * margin, tile_height - 2 * margin};
+                SDL_SetRenderDrawColor(renderer, tile_color.r, tile_color.g, tile_color.b, tile_color.a);
+                SDL_RenderFillRect(renderer, &inner_tile);
+
+                // Draw the number
+                char number_text[2];
                 sprintf(number_text, "%d", g[i][j]);
                 SDL_Color text_color = {255, 255, 255, 255};
                 SDL_Surface* surface = TTF_RenderText_Solid(font, number_text, text_color);
                 SDL_Texture* texture = SDL_CreateTextureFromSurface(renderer, surface);
-                SDL_Rect text_rect = {j * tile_width + tile_width / 3, i * tile_height + tile_height / 3, surface->w, surface->h};
+                SDL_Rect text_rect = {tile.x + tile_width / 2 - surface->w / 2, tile.y + tile_height / 2 - surface->h / 2, surface->w, surface->h};
                 SDL_RenderCopy(renderer, texture, NULL, &text_rect);
                 SDL_FreeSurface(surface);
                 SDL_DestroyTexture(texture);
@@ -291,6 +292,28 @@ int initialize_window(void) {
         return -1;
     }
 
+    SDL_Surface* background_surface = SDL_LoadBMP("wood.bmp");
+    if (!background_surface) {
+        printf("Failed to load background image: %s\n", SDL_GetError());
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        TTF_CloseFont(font);
+        TTF_Quit();
+        SDL_Quit();
+        return -1;
+    }
+    background_texture = SDL_CreateTextureFromSurface(renderer, background_surface);
+    SDL_FreeSurface(background_surface);
+    if (!background_texture) {
+        printf("Failed to create texture from background image: %s\n", SDL_GetError());
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        TTF_CloseFont(font);
+        TTF_Quit();
+        SDL_Quit();
+        return -1;
+    }
+
     return 0;
 }
 
@@ -298,22 +321,22 @@ void process_input(SDL_Event *event, int g[100][100], int n) {
     if (event->type == SDL_KEYDOWN) {
         Index empty = detect_index(0, g, n);
         switch (event->key.keysym.sym) {
-            case SDLK_DOWN:
+            case SDLK_UP:
                 if (empty.i < n - 1) {
                     swap(g, g[empty.i + 1][empty.j], n);
                 }
                 break;
-            case SDLK_UP:
+            case SDLK_DOWN:
                 if (empty.i > 0) {
                     swap(g, g[empty.i - 1][empty.j], n);
                 }
                 break;
-            case SDLK_RIGHT:
+            case SDLK_LEFT:
                 if (empty.j < n - 1) {
                     swap(g, g[empty.i][empty.j + 1], n);
                 }
                 break;
-            case SDLK_LEFT:
+            case SDLK_RIGHT:
                 if (empty.j > 0) {
                     swap(g, g[empty.i][empty.j - 1], n);
                 }
@@ -331,7 +354,7 @@ void process_menu_input(SDL_Event *event, int *selected_option, int *menu_state)
                 *selected_option = (*selected_option + 1) % 3;
                 break;
             case SDLK_UP:
-                *selected_option = (*selected_option + 2) % 3; // +2 to cycle backward
+                *selected_option = (*selected_option + 2) % 3;
                 break;
             case SDLK_RETURN:
                 *menu_state = GAME;
@@ -365,6 +388,7 @@ void render_menu(SDL_Renderer *renderer, TTF_Font *font, int selected_option) {
 }
 
 void destroy_window(void) {
+    SDL_DestroyTexture(background_texture);
     SDL_DestroyRenderer(renderer);
     SDL_DestroyWindow(window);
     TTF_CloseFont(font);
