@@ -1,0 +1,41 @@
+
+
+
+SDL_Window* window = NULL;
+SDL_Renderer* renderer = NULL;
+TTF_Font* font = NULL;
+TTF_Font* font1 = NULL;
+SDL_Texture* background_texture = NULL;
+SDL_Texture* tile1_texture;
+SDL_Texture* tile2_texture;
+SDL_Texture* tile3_texture;
+SDL_Texture* tile4_texture;
+SDL_Texture* tile5_texture;
+SDL_Texture* tile6_texture;
+SDL_Texture* tile7_texture;
+SDL_Texture* tile8_texture;
+SDL_Texture* tile9_texture;
+SDL_Texture* tile10_texture;
+SDL_Texture* tile11_texture;
+SDL_Texture* tile12_texture;
+SDL_Texture* tile13_texture;
+SDL_Texture* tile14_texture;
+SDL_Texture* tile15_texture;
+SDL_Texture* tile16_texture;
+SDL_Texture* tile17_texture;
+SDL_Texture* tile18_texture;
+SDL_Texture* tile19_texture;
+SDL_Texture* tile20_texture;
+SDL_Texture* tile21_texture;
+SDL_Texture* tile22_texture;
+SDL_Texture* tile23_texture;
+SDL_Texture* tile24_texture;
+SDL_Texture* tile25_texture;
+SDL_Texture* credit_texture = NULL;
+SDL_Texture* BACKGROUND1_texture;
+SDL_Texture* difficulte_texture;
+SDL_Texture* win_texture;
+Uint32 start_time;
+Uint32 elapsed_time = 0;
+int game_won = 0;
+int selected_option = 0;
