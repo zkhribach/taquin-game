@@ -8,7 +8,7 @@ This is a **Taquin (sliding puzzle) game** developed in **C** using SDL2 for a s
 To compile the project, use the following command:
 
 ```bash
-g++ Code/game_logic.c Code/render.c Code/main.c -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -Wl,-subsystem,windows -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -o game
+g++ game_logic.c render.c main.c -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -Wl,-subsystem,windows -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -o game
 ```
 
 Make sure you have:
