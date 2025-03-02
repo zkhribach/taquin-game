@@ -1,63 +1,32 @@
-# Taquin Game Project
 
-Welcome to the Taquin Game project! 🎮 This guide will help you get started with Git and GitHub so that our collaboration runs smoothly.
+# Taquin Game
 
----
+This is a **Taquin (sliding puzzle) game** developed in **C** using SDL2 for a school project. The game challenges players to arrange numbered tiles in the correct order by sliding them into an empty space.
 
-## 🚀 Getting Started
+## 🛠 Compilation
 
-### 1. **Clone the Repository**
-To start working on the project, you need to copy (clone) the repository to your local machine.
+To compile the project, use the following command:
 
-Run this command in your terminal:
 ```bash
-git clone git@github.com:zkhribach/taquin-game.git
-cd taquin-game
+g++ Code/game_logic.c Code/render.c Code/main.c -IC:\mingw_dev_lib\include\SDL2 -LC:\mingw_dev_lib\lib -w -Wl,-subsystem,windows -lmingw32 -lSDL2main -lSDL2 -lSDL2_ttf -o game
 ```
-### 2. ***Create Your Own Branch***
-```bash
-git checkout -b your-branch-name
-```
-### 3. ***Make Changes***
-Stage the changes (prepare them for commit):
-```bash
-git add .
-```
-Commit your changes with a meaningful message:
-```bash
-git commit -m "Short description of the changes"
-```
-### 4. ***Push Your Branch to GitHub***
-Upload your branch to GitHub so others can see your changes:
-```bash
-git push origin your-branch-name
-```
-## 🔄 Stay Updated with Main Branch
-Before starting new work or to avoid conflicts, always update your local main branch:
-Switch to the ```main``` branch:
-```bash
-git checkout main
-```
-Pull the latest changes:
-```bash
-git pull origin main
-```
-Update your working branch:
-```bash
-git checkout your-branch-name
-git merge main
-```
-## 🛠️ Basic Git Commands Cheat Sheet
 
-| Command                             | Description                              |
-|-------------------------------------|------------------------------------------|
-| `git status`                        | Check the status of your changes         |
-| `git add .`                         | Stage all changes                        |
-| `git commit -m "message"`           | Commit changes with a message            |
-| `git checkout -b branch-name`       | Create and switch to a new branch        |
-| `git push origin branch-name`       | Push your branch to GitHub               |
-| `git pull origin main`              | Pull the latest changes from `main`      |
-| `git merge main`                    | Merge `main` into your current branch    |
+Make sure you have:
+- **MinGW** installed
+- The necessary **SDL2** and **SDL2_ttf** libraries in `C:\mingw_dev_lib\`
 
+## 🎮 How to Play
+1. Launch the game by running \`game.exe\`.
+2. Navigate the menu using the arrow keys and enter.
+3. Select a difficulty level and start solving the puzzle.
+4. Arrange the tiles in order by sliding them into the empty space.
 
+## 📌 Features
+- Multiple difficulty levels.
+- Timer to track completion time.
+- A simple and intuitive interface.
+- High score saving system.
+
+## 📜 License
+This project was created for educational purposes.
 
